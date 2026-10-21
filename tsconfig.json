@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "commonjs",
+        "moduleResolution": "node",
+
+        "rootDir": "./src", // el directorio de trabajo o fuente
+        "outDir": "./dist", // el directorio de salida 
+
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+
+        "esModuleInterop": true,
+        "strict": false,
+        "skipLibCheck": true
+    }
+}

@@ -1,0 +1,33 @@
+const [rows] = await connection.execute(
+    `SELECT *
+     FROM categoria
+     WHERE activo = TRUE`
+);
+
+
+const categorias = await categoriaRepository.find({
+    where: {
+        activo: true
+    }
+});
+
+
+Categoria.ts
+Videojuego.ts
+Plataforma.ts
+
+
+npm install typeorm reflect-metadata
+
+npm install mysql2   <- este ya deberia estar desde hace uhhh
+
+npm install -D typescript ts-node @types/node @types/express
+
+npx ts-node src/app.ts
+
+npm install -D --save-exact typescript@6.0.3 ts-node@10.9.2
+
+npm list typescript ts-node
+
+
+ALTER TABLE videojuegos.cat_categoria MODIFY COLUMN actvCat BOOL DEFAULT TRUE NOT NULL;
