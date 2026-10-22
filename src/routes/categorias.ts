@@ -21,7 +21,8 @@ router.get("/", async (req, res) => {
       console.error(error);
 
       res.status(500).json({
-          mensaje: "Error al consultar categorías"
+          mensaje: "Error al consultar categorías",
+          error: error
       });
 
   }
