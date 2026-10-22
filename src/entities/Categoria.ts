@@ -16,7 +16,6 @@ export class Categoria {
     })
     nmCat: string;
 
-
     @Column({
         name: "actvCat",
         type: "boolean",

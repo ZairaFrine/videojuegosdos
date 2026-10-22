@@ -29,7 +29,20 @@ router.get("/", async (req, res) => {
             mensaje: "Error al consultar las categorías"
         });
 
+<<<<<<< HEAD
     }
+=======
+  } catch (error) {
+
+      console.error(error);
+
+      res.status(500).json({
+          mensaje: "Error al consultar categorías",
+          error: error
+      });
+
+  }
+>>>>>>> 17c6afc77f01d76e86800ee0b34520a6cd4701b2
 
 });
 
