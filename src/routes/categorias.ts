@@ -12,26 +12,23 @@ const router = express.Router();
 router.get("/", async (req, res) => {
 
     try {
-
-        const categoriaRepository =
-            AppDataSource.getRepository(Categoria);
-
-        const categorias =
-            await categoriaRepository.find();
+        const categoriaRepository = AppDataSource.getRepository(Categoria);
+        const categorias = await categoriaRepository.find({
+            where: {
+                actvCat: true
+            }
+        });
 
         res.json(categorias);
 
     } catch (error) {
 
         console.error(error);
-
         res.status(500).json({
             mensaje: "Error al consultar categorías",
             error: error
         });
-
     }
-
 });
 
 
@@ -41,51 +38,33 @@ router.get("/:id", async (req, res) => {
     try {
 
         const { id } = req.params;
+        const categoriaRepository = AppDataSource.getRepository(Categoria);
 
-        const categoriaRepository =
-            AppDataSource.getRepository(Categoria);
-
-        // Prepared Statements
-        const categoria =
-            await categoriaRepository.findOne({
-
-                where: {
-                    idCat: Number(id)
-                }
-
-            });
+        const categoria = await categoriaRepository.findOne({
+            where: {
+                idCat: Number(id)
+            }
+        });
 
 
         if (!categoria) {
-
             return res.status(404).json({
                 mensaje: "Categoría no encontrada"
             });
-
         }
 
-
         res.json({
-
             ID: categoria.idCat,
-
             Nombre: categoria.nmCat,
-
-            Activo:
-                categoria.actvCat
-                    ? "Si"
-                    : "No"
-
+            Activo: categoria.actvCat ? "Si" : "No"
         });
 
     } catch (error) {
-
         console.error(error);
-
         res.status(500).json({
-            mensaje: "Error al consultar la categoría"
+            mensaje: "Error al consultar la categoría",
+            error: error
         });
-
     }
 
 });
@@ -95,57 +74,38 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
 
     try {
-
         const { nombre } = req.body;
 
-
         if (!nombre || nombre.trim() === "") {
-
             return res.status(400).json({
                 mensaje: "El nombre de la categoría es obligatorio"
             });
-
         }
 
-
-        const categoriaRepository =
-            AppDataSource.getRepository(Categoria);
-
-
-        const nuevaCategoria =
-            categoriaRepository.create({
-
-                nmCat: nombre,
-
-                actvCat: true
-
-            });
+        const categoriaRepository = AppDataSource.getRepository(Categoria);
+        const nuevaCategoria = categoriaRepository.create({
+            nmCat: nombre,
+            actvCat: true
+        });
 
 
-        const resultado =
-            await categoriaRepository.save(
-                nuevaCategoria
-            );
+        const resultado = await categoriaRepository.save(
+            nuevaCategoria
+        );
 
 
         res.status(201).json({
-
-            mensaje:
-                "Categoría creada correctamente",
-
-            id_categoria:
-                resultado.idCat
-
+            mensaje: "Categoría creada correctamente",
+            id_categoria: resultado.idCat
         });
 
     } catch (error) {
 
         console.error(error);
-
         res.status(500).json({
-            mensaje: "Error al crear la categoría"
+            mensaje: "Error al crear la categoría",
+            error: error
         });
-
     }
 
 });
@@ -155,61 +115,40 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
 
     try {
-
         const { id } = req.params;
-
         const { nombre } = req.body;
 
-
         if (!nombre || nombre.trim() === "") {
-
             return res.status(400).json({
                 mensaje: "El nombre de la categoría es obligatorio"
             });
-
         }
 
-
-        const categoriaRepository =
-            AppDataSource.getRepository(Categoria);
-
-
-        const resultado =
-            await categoriaRepository.update(
-
-                Number(id),
-
-                {
-                    nmCat: nombre
-                }
-
-            );
-
+        const categoriaRepository = AppDataSource.getRepository(Categoria);
+        const resultado = await categoriaRepository.update(
+            Number(id),
+            {
+                nmCat: nombre
+            }
+        );
 
         if (resultado.affected === 0) {
-
             return res.status(404).json({
                 mensaje: "Categoría no encontrada"
             });
-
         }
 
-
         res.json({
-
-            mensaje:
-                `Categoría modificada correctamente en ${id}`
-
+            mensaje:`Categoría modificada correctamente en ${id}`
         });
 
     } catch (error) {
 
         console.error(error);
-
         res.status(500).json({
-            mensaje: "Error al modificar la categoría"
+            mensaje: "Error al modificar la categoría",
+            error: error
         });
-
     }
 
 });
@@ -219,54 +158,34 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
 
     try {
-
         const { id } = req.params;
-
-
-        const categoriaRepository =
-            AppDataSource.getRepository(Categoria);
-
-
-        const resultado =
-            await categoriaRepository.update(
-
-                Number(id),
-
-                {
-                    actvCat: false
-                }
-
-            );
-
+        const categoriaRepository = AppDataSource.getRepository(Categoria);
+        const resultado = await categoriaRepository.update(
+            Number(id),
+            {
+                actvCat: false
+            }
+        );
 
         if (resultado.affected === 0) {
-
             return res.status(404).json({
                 mensaje: "Categoría no encontrada"
             });
-
         }
 
 
         res.json({
-
-            mensaje:
-                "Categoría eliminada correctamente",
-
+            mensaje: "Categoría eliminada correctamente",
             idModificado: id
-
         });
 
     } catch (error) {
-
         console.error(error);
-
         res.status(500).json({
-            mensaje: "Error al eliminar la categoría"
+            mensaje: "Error al eliminar la categoría",
+            error: error
         });
-
     }
-
 });
 
 
@@ -274,71 +193,39 @@ router.delete("/:id", async (req, res) => {
 router.post("/buscar", async (req, res) => {
 
     try {
-
         const { nombre } = req.body;
-
-
         if (!nombre || nombre.trim() === "") {
-
             return res.status(400).json({
                 mensaje: "Debe proporcionar un nombre para buscar"
             });
-
         }
 
-
-        const categoriaRepository =
-            AppDataSource.getRepository(Categoria);
-
-
-        const resultado =
-            await categoriaRepository.find({
-
-                where: {
-
-                    nmCat:
-                        Like(`%${nombre}%`)
-
-                }
-
-            });
+        const categoriaRepository = AppDataSource.getRepository(Categoria);
+        const resultado = await categoriaRepository.find({
+            where: {
+                nmCat: Like(`%${nombre}%`)
+            }
+        });
 
 
         const respuesta: object[] = [];
-
-
         for (const categoria of resultado) {
-
             respuesta.push({
-
-                ID:
-                    categoria.idCat,
-
-                Nombre:
-                    categoria.nmCat,
-
-                Activo:
-                    categoria.actvCat
-                        ? "Si"
-                        : "No"
-
+                ID: categoria.idCat,
+                Nombre: categoria.nmCat,
+                Activo: categoria.actvCat ? "Si" : "No"
             });
-
         }
-
 
         res.json(respuesta);
 
     } catch (error) {
-
         console.error(error);
-
         res.status(500).json({
-            mensaje: "Error al buscar categorías"
+            mensaje: "Error al buscar categorías",
+            error: error
         });
-
     }
-
 });
 
 
@@ -346,52 +233,32 @@ router.post("/buscar", async (req, res) => {
 router.put("/activar/:id", async (req, res) => {
 
     try {
-
         const { id } = req.params;
-
-
-        const categoriaRepository =
-            AppDataSource.getRepository(Categoria);
-
-
-        const resultado =
-            await categoriaRepository.update(
-
-                Number(id),
-
-                {
-                    actvCat: true
-                }
-
-            );
-
+        const categoriaRepository = AppDataSource.getRepository(Categoria);
+        const resultado = await categoriaRepository.update(
+            Number(id),
+            {
+                actvCat: true
+            }
+        );
 
         if (resultado.affected === 0) {
-
             return res.status(404).json({
                 mensaje: "Categoría no encontrada"
             });
-
         }
 
-
         res.json({
-
-            mensaje:
-                `Categoría modificada correctamente en ${id}`
-
+            mensaje: `Categoría modificada correctamente en ${id}`
         });
 
     } catch (error) {
-
         console.error(error);
-
         res.status(500).json({
-            mensaje: "Error al activar la categoría"
+            mensaje: "Error al activar la categoría",
+            error: error
         });
-
     }
-
 });
 
 module.exports = router;
