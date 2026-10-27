@@ -1,9 +1,8 @@
-export {};
-const express = require("express");
-const { Like } = require("typeorm");
+import express from "express";
+import { Like } from "typeorm";
 
-const { AppDataSource } = require("../data-source");
-const { Categoria } = require("../entities/Categoria");
+import { AppDataSource } from "../data-source";
+import { Categoria } from "../entities/Categoria";
 
 const router = express.Router();
 
@@ -262,4 +261,4 @@ router.put("/activar/:id", async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
