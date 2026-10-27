@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Categoria } from "./entities/Categoria";
+import { Plataforma } from "./entities/Plataforma";
 
 export const AppDataSource =
     new DataSource({
@@ -12,7 +13,8 @@ export const AppDataSource =
         password: "12qwaszx",
         database: "videojuegos",
         entities: [
-            Categoria
+            Categoria,
+            Plataforma
         ],
         synchronize: false, //La BD manda. Las Entities deben representar la BD existente.
         logging: true // modo developer
