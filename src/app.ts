@@ -1,14 +1,16 @@
 import express from "express";
 import { AppDataSource } from "./data-source";
-import categoriasRoutes from "./routes/categorias";
-const plataformasRoutes = require("./routes/plataformas");
 
+import categoriasRoutes from "./routes/categorias";
+import plataformasRoutes from "./routes/plataformas";
+import videojuegosRoutes from "./routes/videojuegos";
 
 const app = express();
 app.use(express.json());
 
 app.use("/api/categorias", categoriasRoutes);
 app.use( "/api/plataformas", plataformasRoutes );
+app.use( "/api/videojuegos", videojuegosRoutes );
 
 AppDataSource.initialize()
 .then(() => {
