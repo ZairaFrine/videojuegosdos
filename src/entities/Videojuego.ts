@@ -39,11 +39,9 @@ export class Videojuego {
     })
     dateVid: string;
 
-
     @Column({
         name: "actvVid",
         type: "boolean",
-        default: true
     })
     actvVid: boolean;
 
