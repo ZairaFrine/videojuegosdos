@@ -1,22 +1,26 @@
 {
   "name": "videojuegos",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.0.0",
+  "description": "Version TS desarrollo de videojuegos",
   "main": "hw.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node src/app.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.10",
     "express": "^5.2.1",
     "mysql2": "^3.24.4",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^1.1.2"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "^26.6.5",
     "ts-node": "10.9.2",
