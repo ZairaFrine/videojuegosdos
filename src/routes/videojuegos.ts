@@ -15,6 +15,9 @@ router.get("/", async (req, res) => {
     try {
         const videojuegoRepository = AppDataSource.getRepository( Videojuego );
         const videojuegos = await videojuegoRepository.find({
+            where: {
+                actvVid: true
+            },
             relations: {
                 plataformasRelacion: {
                     plataforma: true

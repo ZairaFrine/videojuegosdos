@@ -1,5 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
 
+// import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from "typeorm";
+// import { Categoria } from "./Categoria";
+
 import { VideojuegoCategoria } from "./VideojuegoCategoria";
 import { VideojuegoPlataforma } from "./VideojuegoPlataforma";
 
@@ -36,11 +39,9 @@ export class Videojuego {
     })
     dateVid: string;
 
-
     @Column({
         name: "actvVid",
         type: "boolean",
-        default: true
     })
     actvVid: boolean;
 
@@ -60,7 +61,7 @@ export class Videojuego {
     })
     updated_at: Date;
 
-
+    // Caso tabals intermedias
     @OneToMany(
         () => VideojuegoCategoria,
         relacion => relacion.videojuego
@@ -73,5 +74,25 @@ export class Videojuego {
         relacion => relacion.videojuego
     )
     plataformasRelacion: VideojuegoPlataforma[];
+
+
+
+    //Caso para cuando se tiene una relacion de muchso a uno en un catalogo independiente
+    /* @Column({
+        name: "idCat",
+    })
+    idCat: number;
+
+    @ManyToOne(
+        () => Categoria,
+    )
+    @JoinColumn({
+        name: "idCat",
+        referencedColumnName: "idCat"
+    })
+    categoria: Categoria */
+
+
+
 
 }
