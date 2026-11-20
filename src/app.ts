@@ -19,6 +19,8 @@ app.use(
     })
 );
 
+app.use(express.json());
+
 app.use("/api/categorias", categoriasRoutes);
 app.use( "/api/plataformas", plataformasRoutes );
 app.use( "/api/videojuegos", videojuegosRoutes );
@@ -28,7 +30,7 @@ app.use( "/api/videojuegos", videojuegosRoutes );
 
 
 
-app.use(express.json());
+
 
 AppDataSource.initialize()
 .then(() => {
